@@ -1,42 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do List v1</title>
-    <link rel="stylesheet" href="css\style.css">
-</head>
-<body>
-    
+    <link rel="stylesheet" href="css\style.css" />
+  </head>
+  <body>
     <div class="task-container">
+      <div class="title">
+        <h1>To Do List V1</h1>
+      </div>
 
-        <div class="title">
-            <h1>To Do List V1</h1>
+      <div class="input-container">
+        <span>
+          <input
+            type="text"
+            id="task-title"
+            placeholder="Make Pizza For Wife"
+          />
+          <input
+            type="text"
+            id="task-description"
+            placeholder="She likes pepperoni"
+          />
+        </span>
+        <button id="add-task-button">Add</button>
+      </div>
+
+      <div class="list-of-task">
+        <div class="task">
+          <button id="delete-task-button" class="delete-task-button">X</button>
+          <h2 id="title">Task 1</h2>
+          <p id="description">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione,
+            dolores.
+          </p>
         </div>
 
-        <div class="input-container">
-            <span>
-                <input type="text"  id="task-title" placeholder="Make pizza for wife">
-                <input type="text"  id="task-description" placeholder="She likes pepperoni">
-            </span>
-            <button id="add-task-button">Add</button>
+        <div class="task">
+          <button id="delete-task-button" class="delete-task-button">X</button>
+          <h2 id="title">Task 1</h2>
+          <p id="description">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione,
+            dolores.
+          </p>
         </div>
 
-        <div class="list-of-task">
-            <div class="task">
-                <button id="delete-task">X</button>
-                <h2 id="title">Task 1</h2>
-                <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, dolores.</p>
-            </div>
-            <div class="task">
-                <button id="delete-task">X</button>
-                <h2 id="title">Task 1</h2>
-                <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, dolores.</p>
-            </div>
-        </div>
+      </div>
     </div>
 
     <!-- JS -->
-     <script src="main.js"></script>
-</body>
+    <script src="js/main.js"></script>
+  </body>
 </html>
