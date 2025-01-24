@@ -97,3 +97,24 @@
 .task-container .list-of-task .task #delete-task-button:active {
   background-color: var(--color-orange-dark);
 }
+
+/* task notification */
+
+.alert-box {
+  opacity: 0;
+  position: absolute;
+  background-color: var(--color-orange);
+  color: var(--color-white);
+  margin: 0 auto;
+  top: 20px;
+  left: 0;
+  right: 0;
+  font-weight: 600;
+  max-width: 100%;
+  width: 500px;
+  height: 50px;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 10px;
+  transition: 200ms ease-in-out;
+}

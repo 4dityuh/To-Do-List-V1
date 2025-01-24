@@ -5,12 +5,16 @@ const UI_Elements = {
   "delete-task-button": document.getElementById("delete-task-button"),
   "list-of-task": document.querySelector(".list-of-task"),
   "user-task": document.querySelector(".list-of-task .task"),
+  "alert-box": document.querySelector(".alert-box"),
 };
 
 // TODO :
 // - make a function that deletes the task : DONE
 // - make a function that adds the task : DONE
-// - it should add the task IF both title AND description is filled : ONGOING
+// - make a function that makes spaghetti code on the createElement() in addTask() clean : DONE
+// - it should add the task IF both title AND description is filled : DONE
+// - make an alert so that users can get informed to fill in the task title and description : DONE
+// - make the alert gone when users finally fill both task title and description : ONGOING
 // - tasks shouldn't be deleted if refreshed : ONGOING
 
 // THIS IS SLOW
@@ -22,7 +26,6 @@ const UI_Elements = {
 // }
 
 // THIS IS FASTER
-
 function deleteTask() {
   UI_Elements["list-of-task"].addEventListener("click", (e) => {
     if (e.target.tagName == "BUTTON") {
@@ -31,27 +34,36 @@ function deleteTask() {
   });
 }
 
-function addTask() {
-  // needs : div, h2, p, and button
-  let div = document.createElement("div"),
-    h2 = document.createElement("h2"),
-    p = document.createElement("p"),
-    button = document.createElement("button");
-
-  // test
-  h2.textContent = "Make Pizza For Wife";
-  h2.className = "title";
-  p.textContent = "She likes pepperoni";
-  p.className = "description";
-  button.id = "delete-task-button";
-  button.textContent = "X";
-  div.className = "task";
-  div.append(h2, p, button);
-  UI_Elements["list-of-task"].append(div);
+// no more spaghetti code
+function addElements(element, option = {}) {
+  element = document.createElement(element);
+  if (option.className) element.className = option.className;
+  if (option.id) element.id = option.id;
+  return element;
 }
 
+function addTask(taskTitle, taskDescription) {
+  // needs : div, h2, p, and button
+  let div = addElements("div", { className: "task" }),
+    h2 = addElements("h2", { id: "title" }),
+    p = addElements("p", { id: "description" }),
+    button = addElements("button", { id: "delete-task-button" });
+  button.textContent = "X";
 
-function initializeEventListener(){
+  taskTitle = UI_Elements["task-title"].value;
+  taskDescription = UI_Elements["task-description"].value;
+
+  if (taskTitle.trim() != "" && taskDescription.trim() != "") {
+    h2.textContent = taskTitle;
+    p.textContent = taskDescription;
+    div.append(h2, p, button);
+    UI_Elements["list-of-task"].append(div);
+  } else {
+    UI_Elements["alert-box"].style.opacity = "1";
+  }
+}
+
+function initializeEventListener() {
   UI_Elements["add-task-button"].addEventListener("click", () => {
     addTask();
   });
