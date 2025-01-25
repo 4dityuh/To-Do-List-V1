@@ -34,12 +34,20 @@
 .task-container .input-container {
   width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 0.1rem;
   margin-block: 1rem;
+  font-weight: 700;
+  font-size: 1.2rem;
 }
 
 .task-container .input-container span {
   width: 100%;
+}
+
+.task-container .input-container input:first-of-type {
+  margin-bottom: 10px;
 }
 .task-container .input-container input {
   display: inline-block;
@@ -53,6 +61,8 @@
 }
 
 .task-container .input-container button {
+  align-self: flex-end;
+  height: 133px;
   width: 20%;
   background-color: var(--color-orange);
   border: 1px solid var(--color-black);
@@ -91,7 +101,6 @@
   height: 23px;
   user-select: none;
   font-weight: 600;
-  transition: 100ms ease-in-out;
 }
 
 .task-container .list-of-task .task #delete-task-button:active {
@@ -101,8 +110,8 @@
 /* task notification */
 
 .alert-box {
-  opacity: 0;
-  position: absolute;
+  visibility: hidden;
+  position: fixed;
   background-color: var(--color-orange);
   color: var(--color-white);
   margin: 0 auto;
@@ -116,5 +125,47 @@
   text-align: center;
   padding: 1rem;
   border-radius: 10px;
-  transition: 200ms ease-in-out;
+  z-index: 1;
+}
+
+.alert-box.show {
+  visibility: visible;
+  --webkit-animation: fadeIn 700ms, fadeOut 700ms 1000ms;
+  animation: fadeIn 700ms, fadeOut 700ms 1000ms;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }

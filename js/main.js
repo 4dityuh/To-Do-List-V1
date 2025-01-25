@@ -14,7 +14,7 @@ const UI_Elements = {
 // - make a function that makes spaghetti code on the createElement() in addTask() clean : DONE
 // - it should add the task IF both title AND description is filled : DONE
 // - make an alert so that users can get informed to fill in the task title and description : DONE
-// - make the alert gone when users finally fill both task title and description : ONGOING
+// - make the alert gone when users finally fill both task title and description : DONE
 // - tasks shouldn't be deleted if refreshed : ONGOING
 
 // THIS IS SLOW
@@ -59,7 +59,10 @@ function addTask(taskTitle, taskDescription) {
     div.append(h2, p, button);
     UI_Elements["list-of-task"].append(div);
   } else {
-    UI_Elements["alert-box"].style.opacity = "1";
+    UI_Elements["alert-box"].classList.add("show");
+    setTimeout(() => {
+      UI_Elements["alert-box"].classList.remove("show");
+    }, 1500);
   }
 }
 
