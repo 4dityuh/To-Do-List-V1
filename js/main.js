@@ -15,17 +15,9 @@ const UI_Elements = {
 // - it should add the task IF both title AND description is filled : DONE
 // - make an alert so that users can get informed to fill in the task title and description : DONE
 // - make the alert gone when users finally fill both task title and description : DONE
+// - fix the alert so it wouldn't glitch out whenever user spams : DONE -> I change the way it works
 // - tasks shouldn't be deleted if refreshed : ONGOING
 
-// THIS IS SLOW
-// let deleteTaskButtons = UI_Elements["delete-task-button"];
-// for (let i = 0; i < deleteTaskButtons.length; i++) {
-//   deleteTaskButtons[i].addEventListener("click", (e) => {
-//     e.target.parentElement.remove();
-//   });
-// }
-
-// THIS IS FASTER
 function deleteTask() {
   UI_Elements["list-of-task"].addEventListener("click", (e) => {
     if (e.target.tagName == "BUTTON") {
@@ -34,7 +26,6 @@ function deleteTask() {
   });
 }
 
-// no more spaghetti code
 function addElements(element, option = {}) {
   element = document.createElement(element);
   if (option.className) element.className = option.className;
@@ -43,7 +34,6 @@ function addElements(element, option = {}) {
 }
 
 function addTask(taskTitle, taskDescription) {
-  // needs : div, h2, p, and button
   let div = addElements("div", { className: "task" }),
     h2 = addElements("h2", { id: "title" }),
     p = addElements("p", { id: "description" }),
@@ -58,11 +48,9 @@ function addTask(taskTitle, taskDescription) {
     p.textContent = taskDescription;
     div.append(h2, p, button);
     UI_Elements["list-of-task"].append(div);
+    UI_Elements["alert-box"].classList.remove("show");
   } else {
     UI_Elements["alert-box"].classList.add("show");
-    setTimeout(() => {
-      UI_Elements["alert-box"].classList.remove("show");
-    }, 1500);
   }
 }
 
