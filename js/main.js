@@ -4,7 +4,7 @@ const UI_Elements = {
   "add-task-button": document.getElementById("add-task-button"),
   "delete-task-button": document.getElementById("delete-task-button"),
   "list-of-task": document.querySelector(".list-of-task"),
-  "user-task": document.querySelector(".list-of-task .task"),
+  "user-task": document.querySelectorAll(".list-of-task .task"),
   "alert-box": document.querySelector(".alert-box"),
 };
 
@@ -17,11 +17,21 @@ const UI_Elements = {
 // - make the alert gone when users finally fill both task title and description : DONE
 // - fix the alert so it wouldn't glitch out whenever user spams : DONE -> I change the way it works
 // - tasks shouldn't be deleted if refreshed : ONGOING
+// - no duplicate tasks is allowed : ONGOING
+
+function saveTask() {
+  localStorage.setItem("data", UI_Elements["list-of-task"].innerHTML);
+}
+
+function loadTask() {
+  UI_Elements["list-of-task"].innerHTML = localStorage.getItem("data");
+}
 
 function deleteTask() {
   UI_Elements["list-of-task"].addEventListener("click", (e) => {
     if (e.target.tagName == "BUTTON") {
       e.target.parentElement.remove();
+      saveTask();
     }
   });
 }
@@ -34,24 +44,49 @@ function addElements(element, option = {}) {
 }
 
 function addTask(taskTitle, taskDescription) {
-  let div = addElements("div", { className: "task" }),
-    h2 = addElements("h2", { id: "title" }),
-    p = addElements("p", { id: "description" }),
-    button = addElements("button", { id: "delete-task-button" });
+  let div = addElements("div", {
+      className: "task"
+    }),
+    h2 = addElements("h2", {
+      id: "title",
+      class: "title"
+    }),
+    p = addElements("p", {
+      id: "description"
+    }),
+    button = addElements("button", {
+      id: "delete-task-button"
+    });
   button.textContent = "X";
 
+  let checkInput = true,
+    checkDuplicates = false;
   taskTitle = UI_Elements["task-title"].value;
   taskDescription = UI_Elements["task-description"].value;
 
-  if (taskTitle.trim() != "" && taskDescription.trim() != "") {
+  if (taskTitle.trim() == "" && taskDescription.trim() == "")
+    checkInput = false;
+  else if (
+    localStorage.getItem("data").includes(`<h2 id="title">${taskTitle}</h2>`)
+  )
+    checkDuplicates = true;
+  else {
     h2.textContent = taskTitle;
     p.textContent = taskDescription;
     div.append(h2, p, button);
     UI_Elements["list-of-task"].append(div);
     UI_Elements["alert-box"].classList.remove("show");
-  } else {
-    UI_Elements["alert-box"].classList.add("show");
   }
+
+  if (!checkInput) UI_Elements["alert-box"].classList.add("show");
+  else if (checkDuplicates) {
+    UI_Elements["alert-box"].classList.add("show");
+    UI_Elements[
+      "alert-box"
+    ].textContent = `${taskTitle} has already been made!`;
+  }
+
+  saveTask();
 }
 
 function initializeEventListener() {
@@ -63,4 +98,5 @@ function initializeEventListener() {
 (function main() {
   initializeEventListener();
   deleteTask();
+  loadTask();
 })();
