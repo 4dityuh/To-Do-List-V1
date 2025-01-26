@@ -63,13 +63,12 @@ function addTask(taskTitle, taskDescription) {
       checkDuplicates = false;
   taskTitle = UI_Elements["task-title"].value;
   taskDescription = UI_Elements["task-description"].value;
-  if (taskTitle.trim() == "" && taskDescription.trim() == "") checkInput = false;else if (localStorage.getItem("data").includes("<h2 id=\"title\">".concat(taskTitle, "</h2>"))) checkDuplicates = true;else {
-    h2.textContent = taskTitle;
-    p.textContent = taskDescription;
-    div.append(h2, p, button);
-    UI_Elements["list-of-task"].append(div);
-    UI_Elements["alert-box"].classList.remove("show");
-  }
+  if (!(taskTitle.trim() == "" && taskDescription.trim() == "")) h2.textContent = taskTitle;
+  p.textContent = taskDescription;
+  div.append(h2, p, button);
+  UI_Elements["list-of-task"].append(div);
+  UI_Elements["alert-box"].classList.remove("show");
+  if (localStorage.getItem("data").includes("<h2 id=\"title\">".concat(taskTitle, "</h2>"))) checkDuplicates = true;
   if (!checkInput) UI_Elements["alert-box"].classList.add("show");else if (checkDuplicates) {
     UI_Elements["alert-box"].classList.add("show");
     UI_Elements["alert-box"].textContent = "".concat(taskTitle, " has already been made!");
