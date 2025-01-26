@@ -20,7 +20,7 @@
 .task-container {
   border: 1px solid var(--color-black);
   margin: 100px auto;
-  max-width: 100%;
+  max-width: 95%;
   width: 750px;
   max-height: 100%;
   height: auto;
