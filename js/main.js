@@ -94,6 +94,17 @@ function addElements(element, option = {}) {
   return element;
 }
 
+function capitalizeTitle(taskTitle) {
+  let word = taskTitle.split(" ");
+  let wordLength = word.length;
+
+  for (let i = 0; i < wordLength; i++) {
+    word[i] = word[i][0].toUpperCase() + word[i].substr(1);
+  }
+
+  return word.join(" ");
+}
+
 function addTask(taskTitle, taskDescription) {
   let div = addElements("div", {
       className: "task",
@@ -110,7 +121,7 @@ function addTask(taskTitle, taskDescription) {
     });
   button.textContent = "X";
 
-  taskTitle = UI_Elements["task-title"].value;
+  taskTitle = capitalizeTitle(UI_Elements["task-title"].value);
   taskDescription = UI_Elements["task-description"].value;
 
   if (validateTask(taskTitle, taskDescription)) {
