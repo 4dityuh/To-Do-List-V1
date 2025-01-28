@@ -16,31 +16,60 @@ const UI_Elements = {
 // - make an alert so that users can get informed to fill in the task title and description : DONE
 // - make the alert gone when users finally fill both task title and description : DONE
 // - fix the alert so it wouldn't glitch out whenever user spams : DONE -> I change the way it works
-// - tasks shouldn't be deleted if refreshed : ONGOING -> NEED FIX
-// - no duplicate tasks is allowed : ONGOING -> NEED FIX
+// - tasks shouldn't be deleted if refreshed : DONE
+// - no duplicate tasks is allowed : DONE
 
-function saveTask() {
-  localStorage.setItem("data", UI_Elements["list-of-task"].innerHTML);
+function getTask() {
+  return JSON.parse(localStorage.getItem("tasks")) || [];
+}
+
+function saveTask(taskTitle, taskDescription) {
+  let tasks = getTask();
+  tasks.push({ title: taskTitle, description: taskDescription });
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 function loadTask() {
-  UI_Elements["list-of-task"].innerHTML = localStorage.getItem("data");
+  let tasks = getTask();
+  tasks.forEach(({ title, description }) => {
+    let div = addElements("div", {
+        className: "task",
+      }),
+      h2 = addElements("h2", {
+        id: "title",
+        class: "title",
+      }),
+      p = addElements("p", {
+        id: "description",
+      }),
+      button = addElements("button", {
+        id: "delete-task-button",
+      });
+    button.textContent = "X";
+
+    h2.textContent = title;
+    p.textContent = description;
+    div.append(h2, p, button);
+    UI_Elements["list-of-task"].append(div);
+  });
 }
 
 function deleteTask() {
   UI_Elements["list-of-task"].addEventListener("click", (e) => {
     if (e.target.tagName == "BUTTON") {
-      e.target.parentElement.remove();
-      saveTask();
+      let taskDiv = e.target.parentElement;
+      let taskName = taskDiv.querySelector("h2").innerHTML;
+      let tasks = getTask().filter((task) => task["title"] !== taskName);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      taskDiv.remove();
     }
   });
 }
 
 function validateTask(taskTitle, taskDescription) {
+  let tasks = getTask();
   let checkInput = taskTitle.trim() && taskDescription.trim(),
-    checkDuplicate = localStorage
-      .getItem("data")
-      .includes(`<h2 id="title">${taskTitle}</h2>`);
+    checkDuplicate = tasks.some((task) => task["title"] === taskTitle);
 
   if (!checkInput) {
     showAlert("Please fill in both task title and task description!");
@@ -90,9 +119,10 @@ function addTask(taskTitle, taskDescription) {
     div.append(h2, p, button);
     UI_Elements["list-of-task"].append(div);
     UI_Elements["alert-box"].classList.remove("show");
-  } else validateTask(taskTitle, taskDescription);
-
-  saveTask();
+    saveTask(taskTitle, taskDescription);
+    UI_Elements["task-title"].value = "";
+    UI_Elements["task-description"].value = "";
+  }
 }
 
 function initializeEventListener() {
