@@ -126,6 +126,7 @@ function addTask(taskTitle, taskDescription) {
       ? capitalizeTitle(UI_Elements["task-title"].value)
       : "";
   taskDescription = UI_Elements["task-description"].value;
+
   if (validateTask(taskTitle, taskDescription)) {
     h2.textContent = taskTitle;
     p.textContent = taskDescription;

@@ -33,23 +33,15 @@ function loadTask() {
   let tasks = getTask();
   tasks.forEach(({ title, description }) => {
     let div = addElements("div", {
-        className: "task",
-      }),
-      h2 = addElements("h2", {
-        id: "title",
-        class: "title",
-      }),
-      p = addElements("p", {
-        id: "description",
-      }),
-      button = addElements("button", {
-        id: "delete-task-button",
-      });
-    button.textContent = "X";
+      className: "task",
+    });
 
-    h2.textContent = title;
-    p.textContent = description;
-    div.append(h2, p, button);
+    div.innerHTML = ` 
+                <button id="delete-task-button">X</button>
+                <h2 id="title">${title}</h2>
+                <p id="description">${description}</p>
+            `;
+
     UI_Elements["list-of-task"].append(div);
   });
 }
@@ -107,29 +99,21 @@ function capitalizeTitle(taskTitle) {
 
 function addTask(taskTitle, taskDescription) {
   let div = addElements("div", {
-      className: "task",
-    }),
-    h2 = addElements("h2", {
-      id: "title",
-      class: "title",
-    }),
-    p = addElements("p", {
-      id: "description",
-    }),
-    button = addElements("button", {
-      id: "delete-task-button",
-    });
-  button.textContent = "X";
+    className: "task",
+  });
 
   taskTitle =
     UI_Elements["task-title"].value != ""
       ? capitalizeTitle(UI_Elements["task-title"].value)
       : "";
   taskDescription = UI_Elements["task-description"].value;
+
   if (validateTask(taskTitle, taskDescription)) {
-    h2.textContent = taskTitle;
-    p.textContent = taskDescription;
-    div.append(h2, p, button);
+    div.innerHTML = ` 
+                <button id="delete-task-button">X</button>
+                <h2 id="title">${taskTitle}</h2>
+                <p id="description">${taskDescription}</p>
+            `;
     UI_Elements["list-of-task"].append(div);
     UI_Elements["alert-box"].classList.remove("show");
     saveTask(taskTitle, taskDescription);
