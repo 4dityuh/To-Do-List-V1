@@ -104,7 +104,7 @@ function addTask(taskTitle, taskDescription) {
 
   taskTitle =
     UI_Elements["task-title"].value != ""
-      ? capitalizeTitle(UI_Elements["task-title"].value)
+      ? capitalizeTitle(UI_Elements["task-title"].value.toLowerCase())
       : "";
   taskDescription = UI_Elements["task-description"].value;
 
