@@ -71,6 +71,7 @@
   font-size: 1.5rem;
   transition: 100ms ease-in-out;
   box-shadow: 2px 2px 0 0 var(--color-black);
+  cursor: pointer;
 }
 .task-container .input-container button:active {
   background-color: var(--color-orange-dark);
@@ -101,6 +102,7 @@
   height: 23px;
   user-select: none;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .task-container .list-of-task .task #delete-task-button:active {
